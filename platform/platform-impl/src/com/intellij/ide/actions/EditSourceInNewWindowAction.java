@@ -1,6 +1,7 @@
 // Copyright 2000-2023 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license.
 package com.intellij.ide.actions;
 
+import com.intellij.ide.util.EditorGotoLineNumberDialog;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -25,7 +26,21 @@ public final class EditSourceInNewWindowAction extends DumbAwareAction implement
     Project project = e.getData(CommonDataKeys.PROJECT);
     if (project == null) return;
     FileEditorManager manager = FileEditorManager.getInstance(project);
+    var dialog = new EditorGotoLineNumberDialog(
+      project,
+      e.getData(CommonDataKeys.EDITOR_EVEN_IF_INACTIVE)
+    );
+    var currentCoordinates = dialog.getLogicalPosition();
+    dialog.disposeIfNeeded();
     ((FileEditorManagerImpl)manager).openFileInNewWindow(getVirtualFiles(e)[0]);
+    if (currentCoordinates == null) {
+      return;
+    }
+    var hopefullyTheNewEditor = manager.getSelectedTextEditor();
+    if (hopefullyTheNewEditor == null) {
+      return;
+    }
+    EditorGotoLineNumberDialog.doOKActionImpl(hopefullyTheNewEditor, currentCoordinates);
   }
 
   private static VirtualFile[] getVirtualFiles(@NotNull AnActionEvent e) {
