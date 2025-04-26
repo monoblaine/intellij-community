@@ -11,10 +11,15 @@ import com.intellij.openapi.fileEditor.impl.FileEditorManagerImpl;
 import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.wm.IdeFocusManager;
+
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.Arrays;
+
+import javax.swing.*;
 
 /**
  * @author Konstantin Bulenkov
@@ -40,7 +45,21 @@ public final class EditSourceInNewWindowAction extends DumbAwareAction implement
     if (hopefullyTheNewEditor == null) {
       return;
     }
+    maximizeWindow();
     EditorGotoLineNumberDialog.doOKActionImpl(hopefullyTheNewEditor, currentCoordinates);
+  }
+
+  /**
+   * Copied from {@link ZoomCurrentWindowAction#actionPerformed}
+   */
+  private static void maximizeWindow () {
+    final Component focusOwner = IdeFocusManager.getGlobalInstance().getFocusOwner();
+    if (focusOwner != null) {
+      final Window window = focusOwner instanceof JFrame ? (Window)focusOwner : SwingUtilities.getWindowAncestor(focusOwner);
+      if (window instanceof JFrame frame) {
+        frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+      }
+    }
   }
 
   private static VirtualFile[] getVirtualFiles(@NotNull AnActionEvent e) {
