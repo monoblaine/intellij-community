@@ -42,18 +42,28 @@ public final class EditorGotoLineNumberDialog extends GotoLineNumberDialog {
     return null;
   }
 
+  public LogicalPosition getLogicalPosition() {
+    var coordinates = getCoordinates();
+    return coordinates == null
+       ? null
+       : new LogicalPosition(coordinates.row(), coordinates.column());
+  }
+
   @Override
   protected void doOKAction() {
-    Coordinates coordinates = getCoordinates();
-    if (coordinates == null) return;
+    var logicalPosition = getLogicalPosition();
+    if (logicalPosition == null) return;
 
-    LogicalPosition position = new LogicalPosition(coordinates.row(), coordinates.column());
+    doOKActionImpl(myEditor, logicalPosition);
+    super.doOKAction();
+  }
+
+  public static void doOKActionImpl (Editor myEditor, LogicalPosition position) {
     myEditor.getCaretModel().removeSecondaryCarets();
     myEditor.getCaretModel().moveToLogicalPosition(position);
     myEditor.getScrollingModel().scrollToCaret(ScrollType.CENTER);
     myEditor.getSelectionModel().removeSelection();
     IdeFocusManager.getGlobalInstance().requestFocus(myEditor.getContentComponent(), true);
-    super.doOKAction();
   }
 
   @Override
