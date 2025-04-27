@@ -147,6 +147,12 @@ object Switcher : BaseSwitcherAction(null) {
     }
 
     init {
+      if (forward) {
+        this.minimumSize = JBDimension(0, 0)
+        this.maximumSize = JBDimension(0, 0)
+        this.preferredSize = JBDimension(0, 0)
+        this.size = JBDimension(0, 0)
+      }
       onKeyRelease = SwitcherKeyReleaseListener(if (recent) null else event) { e ->
         ActionUtil.performInputEventHandlerWithCallbacks(ActionUiKind.POPUP, ACTION_PLACE, e) {
           navigate(e)
@@ -308,7 +314,7 @@ object Switcher : BaseSwitcherAction(null) {
       ListHoverListener.DEFAULT.addTo(files)
       clickListener.installOn(files)
       if (filesModel.size > 0) {
-        val selectionIndex = getFilesSelectedIndex(project, files, forward)
+        val selectionIndex = if (!forward) 0 else getFilesSelectedIndex(project, files, forward)
         files.setSelectedIndex(if (selectionIndex > -1) selectionIndex else 0)
       }
       else {
@@ -342,6 +348,10 @@ object Switcher : BaseSwitcherAction(null) {
       Disposer.register(popup, this)
       if (pinned) {
         popup.setMinimumSize(JBDimension(if (windows.isEmpty()) 300 else 500, 200))
+      }
+      if (forward) {
+        popup.setMinimumSize(JBDimension(0, 0))
+        popup.setSize(JBDimension(0, 0))
       }
       isFocusCycleRoot = true
       if (ScreenReader.isActive()) {
