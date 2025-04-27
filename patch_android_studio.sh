@@ -42,6 +42,8 @@ cp "out/production/intellij.platform.ide.impl/com/intellij/ide/util/EditorGotoLi
    ".tmp/unzipped/com/intellij/ide/util/EditorGotoLineNumberDialog.class" &&
 cp "out/production/intellij.platform.ide.impl/com/intellij/ide/actions/EditSourceInNewWindowAction.class" \
    ".tmp/unzipped/com/intellij/ide/actions/EditSourceInNewWindowAction.class" &&
+cp 'out/production/intellij.platform.ide.impl/com/intellij/ide/actions/Switcher$SwitcherPanel.class' \
+   '.tmp/unzipped/com/intellij/ide/actions/Switcher$SwitcherPanel.class' &&
 cd ./.tmp/unzipped &&
 if [ -f ../app.jar ]; then
    rm ../app.jar
