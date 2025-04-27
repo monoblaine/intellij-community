@@ -57,6 +57,7 @@ import com.intellij.ui.hover.ListHoverListener
 import com.intellij.ui.popup.PopupUpdateProcessorBase
 import com.intellij.ui.render.RenderingUtil
 import com.intellij.ui.speedSearch.FilteringListModel
+import com.intellij.util.ui.JBDimension
 import com.intellij.util.ui.JBUI
 import com.intellij.util.ui.StartupUiUtil
 import com.intellij.util.ui.SwingTextTrimmer
@@ -146,6 +147,13 @@ object Switcher : BaseSwitcherAction(null), ActionRemoteBehaviorSpecification.Fr
     }
 
     init {
+      val forward = !launchParameters.wasShiftDown
+      if (forward) {
+        this.minimumSize = JBDimension(0, 0)
+        this.maximumSize = JBDimension(0, 0)
+        this.preferredSize = JBDimension(0, 0)
+        this.size = JBDimension(0, 0)
+      }
       val serviceScope = RecentFilesCoroutineScopeProvider.getInstance(project).coroutineScope
       uiUpdateScope = serviceScope.childScope("Switcher UI updates")
       modelUpdateScope = serviceScope.childScope("Switcher backend requests")
@@ -355,7 +363,7 @@ object Switcher : BaseSwitcherAction(null), ActionRemoteBehaviorSpecification.Fr
       if (files.model.size > 0) {
         val fileFromSelectedEditor = FileEditorManager.getInstance(project).selectedEditor?.file
         val firstFileInList = files.model.getElementAt(0).virtualFile
-        if (firstFileInList != null && firstFileInList == fileFromSelectedEditor) {
+        if (firstFileInList != null && firstFileInList == fileFromSelectedEditor && forward) {
           files.setSelectedIndex(1)
         }
         else {
@@ -400,6 +408,10 @@ object Switcher : BaseSwitcherAction(null), ActionRemoteBehaviorSpecification.Fr
         .createPopup()
       Disposer.register(popup, this)
       popup.setMinimumSize(JBUI.DialogSizes.medium())
+      if (forward) {
+        popup.setMinimumSize(JBDimension(0, 0))
+        popup.setSize(JBDimension(0, 0))
+      }
       isFocusCycleRoot = true
       if (ScreenReader.isActive()) {
         val list = mutableListOf<Component>(files, toolWindows)
