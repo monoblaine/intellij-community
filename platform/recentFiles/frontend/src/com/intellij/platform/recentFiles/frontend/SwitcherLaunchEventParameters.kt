@@ -11,6 +11,7 @@ class SwitcherLaunchEventParameters(event: InputEvent?) {
   val wasAltGraphDown: Boolean = true == event?.isAltGraphDown
   val wasControlDown: Boolean = true == event?.isControlDown
   val wasMetaDown: Boolean = true == event?.isMetaDown
+  val wasShiftDown: Boolean = true == event?.isShiftDown
   val isEnabled: Boolean = wasAltDown || wasAltGraphDown || wasControlDown || wasMetaDown
 
   val keyCode: Int? = (event as? KeyEvent)?.keyCode
