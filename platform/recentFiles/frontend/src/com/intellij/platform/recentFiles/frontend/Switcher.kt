@@ -137,6 +137,13 @@ object Switcher : BaseSwitcherAction(null) {
     }
 
     init {
+      val forward = !launchParameters.wasShiftDown
+      if (forward) {
+        this.minimumSize = JBDimension(0, 0)
+        this.maximumSize = JBDimension(0, 0)
+        this.preferredSize = JBDimension(0, 0)
+        this.size = JBDimension(0, 0)
+      }
       onKeyRelease = SwitcherKeyReleaseListener(if (recent) null else launchParameters) { e ->
         ActionUtil.performInputEventHandlerWithCallbacks(ActionUiKind.POPUP, ACTION_PLACE, e) {
           navigate(e)
@@ -313,7 +320,7 @@ object Switcher : BaseSwitcherAction(null) {
       if (files.model.size > 0) {
         val fileFromSelectedEditor = FileEditorManager.getInstance(project).selectedEditor?.file
         val firstFileInList = files.model.getElementAt(0).virtualFileId.virtualFile()
-        if (firstFileInList != null && firstFileInList == fileFromSelectedEditor) {
+        if (firstFileInList != null && firstFileInList == fileFromSelectedEditor && forward) {
           files.setSelectedIndex(1)
         }
         else {
@@ -375,6 +382,10 @@ object Switcher : BaseSwitcherAction(null) {
       Disposer.register(popup, this)
       if (pinned) {
         popup.setMinimumSize(JBDimension(if (windows.isEmpty()) 300 else 500, 200))
+      }
+      if (forward) {
+        popup.setMinimumSize(JBDimension(0, 0))
+        popup.setSize(JBDimension(0, 0))
       }
       isFocusCycleRoot = true
       if (ScreenReader.isActive()) {
