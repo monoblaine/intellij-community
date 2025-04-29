@@ -161,12 +161,12 @@ object Switcher : BaseSwitcherAction(null) {
         this.preferredSize = JBDimension(0, 0)
         this.size = JBDimension(0, 0)
       }
-      onKeyRelease = SwitcherKeyReleaseListener(if (recent) null else event) { e ->
+      onKeyRelease = SwitcherKeyReleaseListener(if (!forward || recent) null else event) { e ->
         ActionUtil.performInputEventHandlerWithCallbacks(ActionUiKind.POPUP, ACTION_PLACE, e) {
           navigate(e)
         }
       }
-      pinned = !onKeyRelease.isEnabled
+      pinned = !forward || !onKeyRelease.isEnabled
       val onlyEdited = true == onlyEditedFiles
       speedSearch = if (recent && Registry.`is`("ide.recent.files.speed.search")) installOn(this) else null
       cbShowOnlyEditedFiles = if (!recent) null else JCheckBox(IdeBundle.message("recent.files.checkbox.label"))
