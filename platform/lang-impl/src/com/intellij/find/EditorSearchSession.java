@@ -696,7 +696,7 @@ public class EditorSearchSession implements SearchSession,
 
   private final class ReplaceAction extends ButtonAction implements LightEditCompatible {
     ReplaceAction() {
-      super(ApplicationBundle.message("editorsearch.replace.action.text"), 'p');
+      super(ApplicationBundle.message("editorsearch.replace.action.text"), 'R');
     }
 
     @Override
