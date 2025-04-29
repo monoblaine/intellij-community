@@ -22,7 +22,7 @@ jar () {
 echo -e "
 1. Open project in Android Studio
 2. cherry-pick the commits
-3. Assemble the modules intellij.platform.ide.impl and intellij.platform.lang.impl
+3. Assemble the modules intellij.platform.ide.impl, intellij.platform.lang.impl and intellij.platform.ide
 4. Close Android Studio
 5. Press any key to continue" &&
 read -p "waiting..." &&
@@ -48,6 +48,10 @@ cp "out/production/intellij.platform.lang.impl/com/intellij/codeInsight/highligh
    ".tmp/unzipped/com/intellij/codeInsight/highlighting/BraceHighlightingHandler.class" &&
 cp "out/production/intellij.platform.lang.impl/com/intellij/find/EditorSearchSession\$ReplaceAction.class" \
    ".tmp/unzipped/com/intellij/find/EditorSearchSession\$ReplaceAction.class" &&
+cp "out/production/intellij.platform.analysis.impl/messages/FindBundle.properties" \
+   ".tmp/unzipped/messages/FindBundle.properties" &&
+cp "out/production/intellij.platform.ide/messages/EditorBundle.properties" \
+   ".tmp/unzipped/messages/EditorBundle.properties" &&
 cd ./.tmp/unzipped &&
 if [ -f ../app.jar ]; then
    rm ../app.jar
