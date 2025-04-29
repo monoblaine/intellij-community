@@ -154,12 +154,12 @@ object Switcher : BaseSwitcherAction(null), ActionRemoteBehaviorSpecification.Fr
       uiUpdateScope = serviceScope.childScope("Switcher UI updates")
       modelUpdateScope = serviceScope.childScope("Switcher backend requests")
 
-      onKeyRelease = SwitcherKeyReleaseListener(if (recent) null else launchParameters) { e ->
+      onKeyRelease = SwitcherKeyReleaseListener(if (!forward || recent) null else launchParameters) { e ->
         ActionUtil.performInputEventHandlerWithCallbacks(ActionUiKind.POPUP, ACTION_PLACE, e) {
           navigate(e)
         }
       }
-      pinned = !launchParameters.isEnabled
+      pinned = !forward || !launchParameters.isEnabled
       val onlyEdited = true == onlyEditedFiles
       speedSearch = if (recent && Registry.`is`("ide.recent.files.speed.search")) installOn(this) else null
       cbShowOnlyEditedFiles = if (!recent) null else JCheckBox(IdeBundle.message("recent.files.checkbox.label"))
