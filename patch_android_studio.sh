@@ -46,6 +46,8 @@ cp 'out/production/intellij.platform.ide.impl/com/intellij/ide/actions/Switcher$
    '.tmp/unzipped/com/intellij/ide/actions/Switcher$SwitcherPanel.class' &&
 cp "out/production/intellij.platform.lang.impl/com/intellij/codeInsight/highlighting/BraceHighlightingHandler.class" \
    ".tmp/unzipped/com/intellij/codeInsight/highlighting/BraceHighlightingHandler.class" &&
+cp "out/production/intellij.platform.lang.impl/com/intellij/find/EditorSearchSession\$ReplaceAction.class" \
+   ".tmp/unzipped/com/intellij/find/EditorSearchSession\$ReplaceAction.class" &&
 cd ./.tmp/unzipped &&
 if [ -f ../app.jar ]; then
    rm ../app.jar
