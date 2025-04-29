@@ -402,47 +402,6 @@ class BraceHighlightingHandler internal constructor(
    */
   @RequiresEdt
   private fun showScopeHint(leftBraceStart: Int, leftBraceEnd: Int, startComputation: IntUnaryOperator?) {
-    val editor = editor
-    val project = editor.project ?: return
-    val bracePosition = editor.offsetToLogicalPosition(leftBraceStart)
-    val braceLocation = editor.logicalPositionToXY(bracePosition)
-    val y = braceLocation.y
-    val modalityState = ModalityState.stateForComponent(editor.component).asContextElement()
-    val clientId = ClientId.currentOrNull?.asContextElement() ?: EmptyCoroutineContext
-    alarm.schedule {
-      delay(300.milliseconds)
-      val psiDocumentManager = project.serviceAsync<PsiDocumentManager>()
-      withContext(Dispatchers.EDT + modalityState + clientId) {
-        // yes, despite readAction, we must execute in EDT, see performLaterWhenAllCommitted implementation
-        readAction {
-          psiDocumentManager.performLaterWhenAllCommitted {
-            if (editor.isDisposed || !editor.component.isShowing) {
-              return@performLaterWhenAllCommitted
-            }
-
-            val viewRect = editor.scrollingModel.visibleArea
-            if (y >= viewRect.y) {
-              return@performLaterWhenAllCommitted
-            }
-
-            var range = TextRange(startComputation?.applyAsInt(leftBraceStart) ?: leftBraceStart, leftBraceEnd)
-            val document = editor.document
-            var line1 = document.getLineNumber(range.startOffset)
-            val line2 = document.getLineNumber(range.endOffset)
-            if (editor is EditorImpl && editor.shouldSuppressEditorFragmentHint(line1)) {
-              return@performLaterWhenAllCommitted
-            }
-
-            line1 = max(
-              line1.toDouble(),
-              (line2 - EditorFragmentComponent.getAvailableVisualLinesAboveEditor(editor) + 1).toDouble(),
-            ).toInt()
-            range = TextRange(document.getLineStartOffset(line1), range.endOffset)
-            editor.putUserData(HINT_IN_EDITOR_KEY, EditorFragmentComponent.showEditorFragmentHint(editor, range, true, true))
-          }
-        }
-      }
-    }
   }
 }
 
