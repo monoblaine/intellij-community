@@ -2729,12 +2729,13 @@ public class AbstractPopup implements JBPopup, ScreenAreaConsumer, AlignedPopup 
 
   public static boolean isCloseRequest(KeyEvent e) {
     if (e != null && e.getID() == KeyEvent.KEY_PRESSED) {
+      var keyKode = e.getKeyCode();
       KeymapManager keymapManager = KeymapManager.getInstance();
       if (keymapManager != null) {
         Shortcut[] shortcuts = keymapManager.getActiveKeymap().getShortcuts(IdeActions.ACTION_EDITOR_ESCAPE);
         for (Shortcut shortcut : shortcuts) {
           if (shortcut instanceof KeyboardShortcut keyboardShortcut) {
-            if (keyboardShortcut.getFirstKeyStroke().getKeyCode() == e.getKeyCode() &&
+            if (keyboardShortcut.getFirstKeyStroke().getKeyCode() == keyKode &&
                 keyboardShortcut.getSecondKeyStroke() == null) {
               int m1 = keyboardShortcut.getFirstKeyStroke().getModifiers() & (InputEvent.SHIFT_MASK | InputEvent.CTRL_MASK | InputEvent.META_MASK | InputEvent.ALT_MASK);
               int m2 = e.getModifiers();
@@ -2743,7 +2744,7 @@ public class AbstractPopup implements JBPopup, ScreenAreaConsumer, AlignedPopup 
           }
         }
       }
-      return e.getKeyCode() == KeyEvent.VK_ESCAPE && e.getModifiers() == 0;
+      return keyKode == KeyEvent.VK_ESCAPE && e.getModifiers() == 0;
     }
     return false;
   }
