@@ -2744,7 +2744,11 @@ public class AbstractPopup implements JBPopup, ScreenAreaConsumer, AlignedPopup 
           }
         }
       }
-      return keyKode == KeyEvent.VK_ESCAPE && e.getModifiers() == 0;
+      return keyKode == KeyEvent.VK_ESCAPE && e.getModifiers() == 0
+        || keyKode == KeyEvent.VK_LEFT
+        || keyKode == KeyEvent.VK_RIGHT
+        || keyKode == KeyEvent.VK_HOME
+        || keyKode == KeyEvent.VK_END;
     }
     return false;
   }
