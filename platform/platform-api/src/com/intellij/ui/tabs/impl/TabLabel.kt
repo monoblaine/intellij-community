@@ -505,7 +505,7 @@ open class TabLabel @Internal constructor(
     }
 
     val resultDec = mergeUiDecorations(decoration, JBTabsImpl.defaultDecorator.getDecoration())
-    border = EmptyBorder(resultDec.labelInsets)
+    border = EmptyBorder(JBInsets.emptyInsets())
     label.iconTextGap = resultDec.iconTextGap
 
     val contentInsets = resultDec.contentInsetsSupplier.apply(actionsPosition)
