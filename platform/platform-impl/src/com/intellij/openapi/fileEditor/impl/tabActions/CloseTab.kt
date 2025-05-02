@@ -136,10 +136,10 @@ internal class CloseTab(
             if (pinned) {
               val pinIcon = AllIcons.Actions.PinTab
               val provider = BadgeDotProvider(x = 0.7, y = 0.2, radius = 3.0 / pinIcon.iconWidth)
-              BadgeIcon(pinIcon, JBUI.CurrentTheme.IconBadge.INFORMATION, provider)
+              BadgeIcon(pinIcon, JBUI.CurrentTheme.IconBadge.WARNING, provider)
             }
             else {
-              DotIcon(JBUI.CurrentTheme.IconBadge.INFORMATION)
+              DotIcon(JBUI.CurrentTheme.IconBadge.WARNING)
             }
           }
           pinned -> AllIcons.Actions.PinTab
@@ -155,19 +155,15 @@ private class DotIcon(private val color: Color) : Icon {
 
    override fun getIconHeight() = JBUI.scale(13)
 
-   private val inset: Float
-     get() = JBUIScale.scale(3.5f)
-
    private val diameter: Float
-     get() = JBUIScale.scale(6.0f)
+     get() = JBUIScale.scale(13.0f)
 
    override fun paintIcon(c: Component?, g: Graphics, x: Int, y: Int) {
      val g2d = g.create() as Graphics2D
      g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 
-     val curInset = inset
      val curDiameter = diameter
-     val circle = Ellipse2D.Float(x + curInset, y + curInset, curDiameter, curDiameter)
+     val circle = Ellipse2D.Float(x.toFloat(), y.toFloat(), curDiameter, curDiameter)
 
      g2d.color = color
      g2d.fill(circle)
