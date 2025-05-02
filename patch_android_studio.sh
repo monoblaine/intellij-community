@@ -58,6 +58,8 @@ cp 'out/production/intellij.platform.ide/com/intellij/ui/tabs/impl/JBTabsImpl$De
    '.tmp/unzipped/com/intellij/ui/tabs/impl/JBTabsImpl$DefaultDecorator.class' &&
 cp 'out/production/intellij.platform.ide/com/intellij/ui/tabs/impl/TabLabel.class' \
    '.tmp/unzipped/com/intellij/ui/tabs/impl/TabLabel.class' &&
+cp 'out/production/intellij.platform.ide/com/intellij/ui/tabs/impl/JBDefaultTabPainter.class' \
+   '.tmp/unzipped/com/intellij/ui/tabs/impl/JBDefaultTabPainter.class' &&
 cp "out/production/intellij.platform.analysis.impl/messages/FindBundle.properties" \
    ".tmp/unzipped/messages/FindBundle.properties" &&
 cp "out/production/intellij.platform.ide/messages/EditorBundle.properties" \
