@@ -3144,9 +3144,9 @@ open class JBTabsImpl internal constructor(
     override fun getDecoration(): UiDecoration {
       return UiDecoration(
         labelFont = null,
-        labelInsets = JBUI.insets(5, 8),
-        contentInsetsSupplier = { JBUI.insets(0, 4) },
-        iconTextGap = JBUI.scale(4),
+        labelInsets = JBUI.insets(5, 0),
+        contentInsetsSupplier = { JBUI.emptyInsets() },
+        iconTextGap = JBUI.scale(0),
       )
     }
   }
