@@ -46,8 +46,8 @@ cp 'out/production/intellij.platform.ide.impl/com/intellij/ide/actions/Switcher$
    '.tmp/unzipped/com/intellij/ide/actions/Switcher$SwitcherPanel.class' &&
 cp "out/production/intellij.platform.lang.impl/com/intellij/codeInsight/highlighting/BraceHighlightingHandler.class" \
    ".tmp/unzipped/com/intellij/codeInsight/highlighting/BraceHighlightingHandler.class" &&
-cp "out/production/intellij.platform.lang.impl/com/intellij/find/EditorSearchSession\$ReplaceAction.class" \
-   ".tmp/unzipped/com/intellij/find/EditorSearchSession\$ReplaceAction.class" &&
+cp 'out/production/intellij.platform.lang.impl/com/intellij/find/EditorSearchSession$ReplaceAction.class' \
+   '.tmp/unzipped/com/intellij/find/EditorSearchSession$ReplaceAction.class' &&
 cp "out/production/intellij.platform.ide.impl/com/intellij/ui/popup/AbstractPopup.class" \
    ".tmp/unzipped/com/intellij/ui/popup/AbstractPopup.class" &&
 cp "out/production/intellij.platform.ide.impl/com/intellij/openapi/fileEditor/impl/tabActions/CloseTab.class" \
