@@ -54,6 +54,10 @@ cp "out/production/intellij.platform.ide.impl/com/intellij/openapi/fileEditor/im
    ".tmp/unzipped/com/intellij/openapi/fileEditor/impl/tabActions/CloseTab.class" &&
 cp "out/production/intellij.platform.ide.impl/com/intellij/openapi/fileEditor/impl/tabActions/DotIcon.class" \
    ".tmp/unzipped/com/intellij/openapi/fileEditor/impl/tabActions/DotIcon.class" &&
+cp 'out/production/intellij.platform.ide/com/intellij/ui/tabs/impl/JBTabsImpl$DefaultDecorator.class' \
+   '.tmp/unzipped/com/intellij/ui/tabs/impl/JBTabsImpl$DefaultDecorator.class' &&
+cp 'out/production/intellij.platform.ide/com/intellij/ui/tabs/impl/TabLabel.class' \
+   '.tmp/unzipped/com/intellij/ui/tabs/impl/TabLabel.class' &&
 cp "out/production/intellij.platform.analysis.impl/messages/FindBundle.properties" \
    ".tmp/unzipped/messages/FindBundle.properties" &&
 cp "out/production/intellij.platform.ide/messages/EditorBundle.properties" \
