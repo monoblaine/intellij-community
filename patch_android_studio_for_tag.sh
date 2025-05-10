@@ -2,11 +2,11 @@
 
 # https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
 #
-# Android Studio Meerkat 2024.3.1 Patch 2
+# Android Studio Meerkat 2024.3.2
 #
 # IntelliJ IDEA Version:
-# 2024.3.3
-# 243.24978.46
+# 243.25659-EAP-CANDIDATE-SNAPSHOT
+# 243.25659.59
 
 target_tag=$1
 
