@@ -22,15 +22,24 @@ jar () {
 echo -e "
 1. Open project in Android Studio
 2. cherry-pick the commits
-3. Assemble the modules intellij.platform.ide.impl, intellij.platform.lang.impl and intellij.platform.ide
+3. Assemble the following modules:
+    * intellij.platform.ide.impl
+    * intellij.platform.lang.impl
+    * intellij.platform.ide
+    * intellij.platform.recentFiles.frontend
 4. Close Android Studio
 5. Press any key to continue" &&
 read -p "waiting..." &&
 if [ -d "./.tmp" ]; then
     rm -rf ./.tmp
 fi &&
-mkdir -p ./.tmp/unzipped &&
+mkdir ./.tmp &&
 echo "*" >./.tmp/.gitignore &&
+
+# ==============================================================================
+# app.jar
+# ==============================================================================
+mkdir -p ./.tmp/unzipped &&
 echo "Creating a copy of app.jar..." &&
 cp "$path_to_product/lib/app.jar" ./.tmp/app.jar.orig &&
 cd ./.tmp/unzipped &&
@@ -73,5 +82,30 @@ jar -cf0 ../app.jar * &&
 echo "Moving the new app.jar to installation dir..." &&
 mv ../app.jar "$path_to_product/lib/app.jar" &&
 cd - >/dev/null &&
+rm -rf ./.tmp/unzipped &&
+
+# ==============================================================================
+# intellij.platform.recentFiles.frontend.jar
+# ==============================================================================
+mkdir -p ./.tmp/unzipped &&
+echo "Creating a copy of intellij.platform.recentFiles.frontend.jar..." &&
+cp "$path_to_product/lib/modules/intellij.platform.recentFiles.frontend.jar" ./.tmp/intellij.platform.recentFiles.frontend.jar.orig &&
+cd ./.tmp/unzipped &&
+echo "Unzipping intellij.platform.recentFiles.frontend.jar..." &&
+jar -xf ../intellij.platform.recentFiles.frontend.jar.orig &&
+cd - >/dev/null &&
+echo "Copying modified class files..." &&
+cp out/production/intellij.platform.recentFiles.frontend/com/intellij/platform/recentFiles/frontend/*.class \
+   ./.tmp/unzipped/com/intellij/platform/recentFiles/frontend/ &&
+cd ./.tmp/unzipped &&
+if [ -f ../intellij.platform.recentFiles.frontend.jar ]; then
+   rm ../intellij.platform.recentFiles.frontend.jar
+fi &&
+echo "Creating the new intellij.platform.recentFiles.frontend.jar..." &&
+jar -cf0 ../intellij.platform.recentFiles.frontend.jar * &&
+echo "Moving the new intellij.platform.recentFiles.frontend.jar to installation dir..." &&
+mv ../intellij.platform.recentFiles.frontend.jar "$path_to_product/lib/modules/intellij.platform.recentFiles.frontend.jar" &&
+cd - >/dev/null &&
+
 echo "Cleaning up..." &&
 rm -rf ./.tmp/unzipped
