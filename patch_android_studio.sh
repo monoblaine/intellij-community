@@ -23,9 +23,9 @@ echo -e "
 1. Open project in Android Studio
 2. cherry-pick the commits
 3. Assemble the following modules:
-    * intellij.platform.ide.impl
     * intellij.platform.lang.impl
     * intellij.platform.ide
+    * intellij.platform.ide.impl
     * intellij.platform.recentFiles.frontend
 4. Close Android Studio
 5. Press any key to continue" &&
