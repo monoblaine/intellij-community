@@ -81,16 +81,18 @@ finalize_jar_stuff () {
 }
 
 echo -e "
-1. Open project in Android Studio
-2. cherry-pick the commits
-3. Assemble the following modules:
+1. Check build configuration section in https://github.com/JetBrains/intellij-community/tree/idea/$version
+2. Delete everything under intellij-community/out
+3. Open project in Android Studio
+4. cherry-pick the commits
+5. Assemble the following modules:
     * intellij.platform.analysis.impl
     * intellij.platform.lang.impl
     * intellij.platform.ide
     * intellij.platform.ide.impl
     * intellij.platform.recentFiles.frontend
-4. Close Android Studio
-5. Press any key to continue" &&
+6. Close Android Studio
+7. Press any key to continue" &&
 read -p "waiting..." &&
 if [ -d "$path_to_tmp" ]; then
     rm -rf "$path_to_tmp"
