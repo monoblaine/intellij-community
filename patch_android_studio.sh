@@ -1,5 +1,30 @@
 #!/bin/bash
 
+echo -e '
+version=<new intellij version>
+git_tag='"'"'idea/'"'"'"$version"
+./fetch_tag.sh "$git_tag"
+git checkout -b enhancements@$git_tag $git_tag
+cd android && git reset --hard $git_tag && cd ..
+
+1. cherry-pick the commits
+2. Delete everything under intellij-community/out
+3. Check build configuration section in https://github.com/JetBrains/intellij-community/tree/idea/<version>
+4. Open project in Android Studio
+5. Assemble the following modules:
+    * intellij.platform.analysis.impl
+    * intellij.platform.lang.impl
+    * intellij.platform.ide
+    * intellij.platform.ide.impl
+    * intellij.platform.recentFiles.frontend
+6. Close Android Studio
+
+./restore_android_studio.sh <existing intellij version>
+
+7. Open Android Studio and run the updater
+8. Close Android Studio'
+read -p "Press any key to continue..."
+
 net session >/dev/null 2>&1
 error_level=$?
 
@@ -80,20 +105,6 @@ finalize_jar_stuff () {
     rm -rf "$path_to_unzipped"
 }
 
-echo -e "
-1. Check build configuration section in https://github.com/JetBrains/intellij-community/tree/idea/$version
-2. Delete everything under intellij-community/out
-3. Open project in Android Studio
-4. cherry-pick the commits
-5. Assemble the following modules:
-    * intellij.platform.analysis.impl
-    * intellij.platform.lang.impl
-    * intellij.platform.ide
-    * intellij.platform.ide.impl
-    * intellij.platform.recentFiles.frontend
-6. Close Android Studio
-7. Press any key to continue" &&
-read -p "waiting..." &&
 if [ -d "$path_to_tmp" ]; then
     rm -rf "$path_to_tmp"
 fi &&
